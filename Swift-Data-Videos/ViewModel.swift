@@ -10,7 +10,7 @@ import SwiftData
 
 @Observable
 final class ViewModel: ObservableObject {
-    let container = try! ModelContainer(for: [Video.self, Metadata.self])
+    let container = try! ModelContainer(for: Video.self, Metadata.self)
     
     @MainActor
     var modelContext: ModelContext {
@@ -22,6 +22,7 @@ final class ViewModel: ObservableObject {
     @MainActor
     func getVideos() {
         let fetchDescriptor = FetchDescriptor<Video>(predicate: nil, sortBy: [SortDescriptor<Video>(\.title)])
+        videos = try! modelContext.fetch(fetchDescriptor)
         print(videos)
     }
 
